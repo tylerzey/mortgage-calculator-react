@@ -198,7 +198,7 @@ export default class MortgageCalculator extends React.Component {
 
     render() {
 
-        const {totalPrice, downPayment, showAdvanced, additionalPrincipal} = this.state;
+        const {totalPrice, downPayment, showAdvanced, additionalPrincipal, showPaymentSchedule} = this.state;
         const {loanAmount, principalAndInterest, tax, insurance, mortgageInsurance, total} = this.state.mortgage;
         const {interestRate, taxRate, insuranceRate, mortgageInsuranceRate, mortgageInsuranceEnabled} = this.mortgageCalculator;
         const styles = this.props.styles || DefaultStyles;
@@ -329,10 +329,21 @@ export default class MortgageCalculator extends React.Component {
                     </div>
                 </div>
 
-                <div className={styles.schedule}>
-                    <h3>Payment Schedule</h3>
-                    <PaymentSchedule mortgage={this.state.mortgage}/>
-                </div>
+       		  	<div className={styles.advancedButton}>
+						<button type="button" onClick={() => this.setState({showPaymentSchedule: !showPaymentSchedule})}>{showPaymentSchedule ? "Hide" : "Show"} Payment Schedule</button>
+					</div>
+
+					{
+						showPaymentSchedule && (
+						<div className={styles.schedule}>
+							<h3>Payment Schedule</h3>
+							<PaymentSchedule mortgage={this.state.mortgage}/>
+							<div className={styles.advancedButton}>
+								<button type="button" onClick={() => this.setState({showPaymentSchedule: !showPaymentSchedule})}>{showPaymentSchedule ? "Hide" : "Show"} Payment Schedule</button>
+							</div>
+						</div>
+						)
+					}
 
                 <div className={styles.versionInfo}>
                     <a href="https://github.com/tommymcglynn/mortgage-calculator-react">mortgage-calculator-react {pjson.version}</a>
